@@ -25,10 +25,15 @@ const STORAGE_KEY = 'trade-demo-lang';
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>('en');
 
-  // 首次挂载时读取用户上次选择的语言（localStorage 持久化）
+  // 语言优先级：用户手动选择（localStorage）> 浏览器语言检测 > 默认英文
+  // 即中文访客首次打开自动显示中文，海外访客默认英文（外贸站的常见做法）
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved === 'zh' || saved === 'en') setLang(saved);
+    if (saved === 'zh' || saved === 'en') {
+      setLang(saved);
+    } else if (window.navigator.language.toLowerCase().startsWith('zh')) {
+      setLang('zh');
+    }
   }, []);
 
   const toggleLang = () => {
