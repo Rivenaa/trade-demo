@@ -127,4 +127,19 @@ export interface Dictionary {
     rights: string;
     demoNote: string;
   };
+  basket: {
+    title: string;
+    empty: string;
+    emptyCta: string;
+    addToBasket: string;
+    added: string;
+    remove: string;
+    quantity: string;
+    moqLabel: string;
+    contactTitle: string;
+    messageOptional: string;
+    messagePlaceholder: string;
+    submit: string;
+    summary: string; // 含 {count} 占位符，渲染时替换
+  };
 }

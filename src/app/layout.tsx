@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { LanguageProvider } from '@/i18n/LanguageProvider';
+import { BasketProvider } from '@/components/BasketProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -22,9 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LanguageProvider>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <BasketProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </BasketProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -8,6 +8,7 @@ import ProductImage from './ProductImage';
 import ProductCard from './ProductCard';
 import PriceTierTable from './PriceTierTable';
 import InquiryForm from './InquiryForm';
+import AddToBasketButton from './AddToBasketButton';
 
 export default function ProductDetail({ product }: { product: Product }) {
   const { lang, d } = useLanguage();
@@ -56,6 +57,11 @@ export default function ProductDetail({ product }: { product: Product }) {
               <dd className="mt-1 font-semibold text-slate-700">{product.leadTime[lang]}</dd>
             </div>
           </dl>
+
+          {/* 加入询盘篮（B2B 核心转化动作） */}
+          <div className="mt-6">
+            <AddToBasketButton slug={product.slug} size="lg" />
+          </div>
 
           <h2 className="mt-8 text-lg font-bold text-slate-800">{d.product.specs}</h2>
           <dl className="mt-3 divide-y divide-slate-100 rounded-xl border border-slate-200">

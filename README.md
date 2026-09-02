@@ -20,6 +20,7 @@
 | 产品详情：规格表、MOQ、交期 | 工业品类目详情 |
 | 阶梯价表格（量价折扣，FOB 深圳） | B2B 定价模式 |
 | 询盘表单（产品预填、双语错误提示） | Inquiry 询盘系统 |
+| 询盘篮（多产品加篮合并提交，localStorage 持久化，Header 角标） | B2B 询盘篮（多 SKU 合并询价，类阿里国际站） |
 | RFQ 批量询价（动态增删条目） | RFQ 报价流程 |
 | 中 / 英语言切换（localStorage 记忆） | 外贸多语言 |
 | `generateStaticParams` 静态生成 16 个产品页 + `generateMetadata` 动态标题 | SSG / SEO |
@@ -42,10 +43,11 @@ src/
     products/page.tsx        # 产品列表（筛选 + 搜索，useSearchParams + Suspense）
     products/[slug]/page.tsx # 产品详情（服务端组件，SSG + 动态 metadata）
     rfq/page.tsx             # RFQ 批量询价
+    basket/page.tsx          # 询盘篮（多产品合并提交，复用 /api/inquiry 的 rfq 分支）
     about/page.tsx           # 关于我们
     contact/page.tsx         # 联系我们
     api/inquiry/route.ts     # 询盘/RFQ 接收接口
-  components/                # Header / Footer / ProductCard / InquiryForm 等
+  components/                # Header / Footer / ProductCard / InquiryForm / BasketProvider 等
   data/products.ts           # 产品目录数据（类型化建模）
   i18n/                      # 轻量多语言：字典 + Context（en / zh 类型强制同步）
 ```

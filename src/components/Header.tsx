@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { useBasket } from './BasketProvider';
 
 export default function Header() {
   const { d, toggleLang } = useLanguage();
+  const { count, mounted } = useBasket();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
@@ -15,6 +17,25 @@ export default function Header() {
     { href: '/about', label: d.nav.about },
     { href: '/contact', label: d.nav.contact },
   ];
+
+  // 询盘篮图标 + 数量角标（mounted 后才显示数量，避免水合不一致）
+  const basketLink = (
+    <Link
+      href="/basket"
+      aria-label={d.basket.title}
+      className="relative p-1 text-slate-600 transition-colors hover:text-brand-700"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 8h16l-1.6 11.2a1 1 0 01-1 .8H6.6a1 1 0 01-1-.8L4 8z" />
+        <path d="M8.5 8V6.5a3.5 3.5 0 017 0V8" />
+      </svg>
+      {mounted && count > 0 && (
+        <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-500 px-1 text-[10px] font-bold text-slate-900">
+          {count}
+        </span>
+      )}
+    </Link>
+  );
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -42,6 +63,7 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
+          {basketLink}
           <button
             onClick={toggleLang}
             className="rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600 transition-colors hover:border-brand-500 hover:text-brand-700"
@@ -56,8 +78,9 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* 移动端：语言切换 + 汉堡按钮 */}
+        {/* 移动端：询盘篮 + 语言切换 + 汉堡按钮 */}
         <div className="flex items-center gap-3 md:hidden">
+          {basketLink}
           <button
             onClick={toggleLang}
             className="rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600"
